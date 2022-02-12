@@ -12,7 +12,40 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
 
+  @override
+  void initState() {
+    super.initState();
+    createPloyLine();
+  }
+
+  List<Polyline> myPolyline = [];
+
+  createPloyLine() {
+    myPolyline.add(
+      Polyline(
+          polylineId: const PolylineId('1'),
+          color: Colors.blue,
+          width: 3,
+          points: [
+            LatLng(31.037933, 31.381523),
+            LatLng(31.037933, 31.388523),
+          ],
+          patterns: [
+            PatternItem.dash(20),
+            PatternItem.gap(10),
+          ]),
+    );
+  }
+
   var myMarkers=HashSet<Marker>();
+
+  Set<Circle> circles = Set.from([Circle(
+    circleId: CircleId("1"),
+    center: LatLng(31.037933, 31.381523),
+    radius: 1000,
+    strokeWidth: 1,
+    strokeColor: Colors.lightBlue.withOpacity(0.5)
+  )]);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +69,9 @@ class _HomeViewState extends State<HomeView> {
             ));
           });
             },
+            polylines: myPolyline.toSet(),
+
+            circles:circles ,
             markers: myMarkers,
       )),
     );
